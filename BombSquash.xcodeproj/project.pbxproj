@@ -12,6 +12,7 @@
 		74C13BD22176BC94005281A3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74C13BD02176BC94005281A3 /* Main.storyboard */; };
 		74C13BD42176BC95005281A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74C13BD32176BC95005281A3 /* Assets.xcassets */; };
 		74C13BD72176BC95005281A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74C13BD52176BC95005281A3 /* LaunchScreen.storyboard */; };
+		74C13BDF2176C9E3005281A3 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C13BDE2176C9E3005281A3 /* Scene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		74C13BD32176BC95005281A3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		74C13BD62176BC95005281A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		74C13BD82176BC95005281A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74C13BDE2176C9E3005281A3 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				74C13BCC2176BC94005281A3 /* AppDelegate.swift */,
 				74C13BCE2176BC94005281A3 /* ViewController.swift */,
+				74C13BDE2176C9E3005281A3 /* Scene.swift */,
 				74C13BD02176BC94005281A3 /* Main.storyboard */,
 				74C13BD32176BC95005281A3 /* Assets.xcassets */,
 				74C13BD52176BC95005281A3 /* LaunchScreen.storyboard */,
@@ -137,6 +140,7 @@
 			files = (
 				74C13BCF2176BC94005281A3 /* ViewController.swift in Sources */,
 				74C13BCD2176BC94005281A3 /* AppDelegate.swift in Sources */,
+				74C13BDF2176C9E3005281A3 /* Scene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +285,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 94VKA4H8JS;
 				INFOPLIST_FILE = BombSquash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -298,6 +303,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 94VKA4H8JS;
 				INFOPLIST_FILE = BombSquash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

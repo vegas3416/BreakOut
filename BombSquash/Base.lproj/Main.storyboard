@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A277" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -9,16 +13,78 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="BombSquash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LQO-8E-VG4" customClass="SKView">
+                                <rect key="frame" x="0.0" y="95.5" width="375" height="571.5"/>
+                                <color key="backgroundColor" red="0.090196078430000007" green="0.72549019609999998" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P0Q-PA-mgl">
+                                <rect key="frame" x="260" y="30" width="100" height="30"/>
+                                <state key="normal" title="Start"/>
+                                <connections>
+                                    <action selector="gameStatusButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="y6Z-7T-lYn"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="26y-iA-Omn">
+                                <rect key="frame" x="135" y="30" width="105" height="20.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k7e-vm-VPC">
+                                        <rect key="frame" x="0.0" y="0.0" width="49.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YxF-YN-dVM">
+                                        <rect key="frame" x="57.5" y="0.0" width="47.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="k7e-vm-VPC" firstAttribute="leading" secondItem="26y-iA-Omn" secondAttribute="leading" id="n3e-by-a0n"/>
+                                    <constraint firstAttribute="trailing" secondItem="YxF-YN-dVM" secondAttribute="trailing" id="rW8-FL-dCz"/>
+                                    <constraint firstItem="YxF-YN-dVM" firstAttribute="leading" secondItem="k7e-vm-VPC" secondAttribute="trailing" constant="8" id="vTt-OF-J5a"/>
+                                </constraints>
+                            </stackView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="10" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="aXa-7E-gbr">
+                                <rect key="frame" x="18" y="60.5" width="339" height="31"/>
+                                <connections>
+                                    <action selector="gameSpeedSlider:" destination="BYZ-38-t0r" eventType="valueChanged" id="rXH-1c-l1F"/>
+                                </connections>
+                            </slider>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="P0Q-PA-mgl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="0Q9-0u-sdS"/>
+                            <constraint firstItem="aXa-7E-gbr" firstAttribute="top" secondItem="26y-iA-Omn" secondAttribute="bottom" constant="10" id="1BQ-mR-riI"/>
+                            <constraint firstItem="aXa-7E-gbr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="5id-ok-1Vh"/>
+                            <constraint firstItem="LQO-8E-VG4" firstAttribute="top" secondItem="aXa-7E-gbr" secondAttribute="bottom" constant="5" id="7wc-y8-Qgg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="LQO-8E-VG4" secondAttribute="bottom" id="Ldy-ku-bNA"/>
+                            <constraint firstItem="LQO-8E-VG4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ViS-Ag-BMk"/>
+                            <constraint firstItem="26y-iA-Omn" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="ccU-6f-YXn"/>
+                            <constraint firstItem="P0Q-PA-mgl" firstAttribute="leading" secondItem="26y-iA-Omn" secondAttribute="trailing" constant="20" id="cjA-JO-xr5"/>
+                            <constraint firstItem="26y-iA-Omn" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="f0e-P8-Ies"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="P0Q-PA-mgl" secondAttribute="trailing" constant="15" id="hCx-aj-AHX"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="aXa-7E-gbr" secondAttribute="trailing" constant="20" id="mQx-yP-Z1j"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="LQO-8E-VG4" secondAttribute="trailing" id="ugB-lm-kYY"/>
+                            <constraint firstItem="aXa-7E-gbr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wgF-Tm-X2V"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="bubbleView" destination="LQO-8E-VG4" id="UR7-7M-Bc6"/>
+                        <outlet property="pointsScored" destination="YxF-YN-dVM" id="09M-kM-3Vs"/>
+                        <outlet property="startButton" destination="P0Q-PA-mgl" id="oIB-S0-NCx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="329" y="118"/>
         </scene>
     </scenes>
 </document>
