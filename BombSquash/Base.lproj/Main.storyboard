@@ -29,6 +29,12 @@
                                     <action selector="gameStatusButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="y6Z-7T-lYn"/>
                                 </connections>
                             </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="10" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="aXa-7E-gbr">
+                                <rect key="frame" x="18" y="60.5" width="339" height="31"/>
+                                <connections>
+                                    <action selector="gameSpeedSlider:" destination="BYZ-38-t0r" eventType="valueChanged" id="rXH-1c-l1F"/>
+                                </connections>
+                            </slider>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="26y-iA-Omn">
                                 <rect key="frame" x="135" y="30" width="105" height="20.5"/>
                                 <subviews>
@@ -51,12 +57,6 @@
                                     <constraint firstItem="YxF-YN-dVM" firstAttribute="leading" secondItem="k7e-vm-VPC" secondAttribute="trailing" constant="8" id="vTt-OF-J5a"/>
                                 </constraints>
                             </stackView>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="10" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="aXa-7E-gbr">
-                                <rect key="frame" x="18" y="60.5" width="339" height="31"/>
-                                <connections>
-                                    <action selector="gameSpeedSlider:" destination="BYZ-38-t0r" eventType="valueChanged" id="rXH-1c-l1F"/>
-                                </connections>
-                            </slider>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>

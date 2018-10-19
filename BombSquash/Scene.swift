@@ -10,19 +10,24 @@ import Foundation
 
 import SpriteKit
 
+protocol ScoredPointsDelegate {
+    func gamePoints(value: Int)
+}
+
 class BubbleScene: SKScene {
     
+    var gamePointsDelegate: ScoredPointsDelegate?
     
     var sceneBackground: SKSpriteNode!
-    
+
     var lastUpdateTime: TimeInterval = 0
     var dt: TimeInterval = 0
     var gameTimer: Timer!
     
     var gameSpeed: CGFloat = 10.0
-    
+
     override func didMove(to view: SKView) {
-        
+
         anchorPoint = CGPoint(x: 0, y: 1.0)
         sceneBackground = SKSpriteNode(color: UIColor.lightGray, size: size)
         sceneBackground.anchorPoint = CGPoint(x: 0, y: 1.0) //Anchors to top left
@@ -30,36 +35,37 @@ class BubbleScene: SKScene {
         sceneBackground.zPosition = -1
         self.addChild(sceneBackground)
         
+        //gameTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(addBubble), userInfo: nil, repeats: true)
+
+
     }
 
     override func update(_ currentTime: CFTimeInterval) {
-        
-        if self.isPaused {
-            lastUpdateTime = 0
-        } else {
-            if lastUpdateTime > 0 {
-                dt = currentTime - lastUpdateTime
-            } else {
-                dt = 0
+
+        //Add bubbles at correct time
+        if lastUpdateTime > 0 {
+            if currentTime - lastUpdateTime > 1 {
+                addBubble()
+                lastUpdateTime = currentTime
             }
+        } else {
             lastUpdateTime = currentTime
-            
-            //addBubble()
-            dropBubbles()
-            removeExcessBubbles()
         }
+
+        //Take care of bubble movement and removal of bubble
+        dropBubbles()
+        removeExcessBubbles()
        
     }
-    
-    @objc
+
     func addBubble() {
-        //Need to randomly make the bubble sizes
-        
+
         //let bubble = SKSpriteNode(imageNamed: IMAGE)  //use this if we want to use an image instead
 
         
-        let bubble = SKShapeNode(circleOfRadius: CGFloat(arc4random_uniform(25) + 5))
+        let bubble = SKShapeNode(circleOfRadius: CGFloat(arc4random_uniform(23) + 4))
         bubble.fillColor = UIColor.red
+        bubble.name = "bubble"
         sceneBackground.addChild(bubble)
         var startingPoint = CGPoint(x: 0, y: 0)
         let randomValue = arc4random_uniform(UInt32(size.width))
@@ -80,7 +86,7 @@ class BubbleScene: SKScene {
             let xOffset: CGFloat = 0
             let yOffset: CGFloat = gameSpeed
             let newLocation = CGPoint(x: child.position.x + xOffset, y: child.position.y - yOffset)
-            let moveAction = SKAction.move(to: newLocation, duration: 0.2)
+            let moveAction = SKAction.move(to: newLocation, duration: 1)
             child.run(moveAction)
         }
     }
@@ -89,6 +95,24 @@ class BubbleScene: SKScene {
         for child in sceneBackground.children {
             if child.position.y < (-1)*size.height {
                 child.removeFromParent()
+            }
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        
+        if isPaused {
+            return
+        }
+        
+        let touchLocation = touch.location(in: self)
+        
+        for bubble in sceneBackground.children {
+            if bubble.contains(touchLocation) {
+                print("convert: ", Int(bubble.frame.size.width))
+                gamePointsDelegate?.gamePoints(value: Int(bubble.frame.size.width))
+                bubble.removeFromParent()
             }
         }
     }
