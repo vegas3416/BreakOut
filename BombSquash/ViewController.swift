@@ -68,31 +68,31 @@ class ViewController: UIViewController, ScoredPointsDelegate {
         case 0...10:
             points = points + 10
             pointsScored.text = "\(points)"
-        case 11...15:
+        case 11...20:
             points = points + 9
             pointsScored.text = "\(points)"
-        case 16...20:
+        case 21...30:
             points = points + 8
             pointsScored.text = "\(points)"
-        case 21...25:
+        case 31...40:
             points = points + 7
             pointsScored.text = "\(points)"
-        case 26...30:
+        case 41...50:
             points = points + 6
             pointsScored.text = "\(points)"
-        case 31...35:
+        case 51...60:
             points = points + 5
             pointsScored.text = "\(points)"
-        case 36...40:
+        case 61...70:
             points = points + 4
             pointsScored.text = "\(points)"
-        case 41...45:
+        case 71...80:
             points = points + 3
             pointsScored.text = "\(points)"
-        case 46...49:
+        case 81...90:
             points = points + 2
             pointsScored.text = "\(points)"
-        case 50:
+        case 100:
             points = points + 1
             pointsScored.text = "\(points)"
         default:

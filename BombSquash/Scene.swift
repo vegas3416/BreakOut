@@ -25,6 +25,7 @@ class BubbleScene: SKScene {
     var gameTimer: Timer!
     
     var gameSpeed: CGFloat = 10.0
+    var zombieCounter = 0
 
     override func didMove(to view: SKView) {
 
@@ -45,7 +46,7 @@ class BubbleScene: SKScene {
         //Add bubbles at correct time
         if lastUpdateTime > 0 {
             if currentTime - lastUpdateTime > 1 {
-                addBubble()
+                addItem()
                 lastUpdateTime = currentTime
             }
         } else {
@@ -56,29 +57,44 @@ class BubbleScene: SKScene {
         dropBubbles()
         removeExcessBubbles()
        
+        checkCollisions()
     }
 
-    func addBubble() {
+    func addItem() {
 
-        //let bubble = SKSpriteNode(imageNamed: IMAGE)  //use this if we want to use an image instead
-
+        zombieCounter += 1
+        var fallingItem = SKSpriteNode()
+        let sizeOfItem = CGFloat(arc4random_uniform(91) + 10)
         
-        let bubble = SKShapeNode(circleOfRadius: CGFloat(arc4random_uniform(23) + 4))
-        bubble.fillColor = UIColor.red
-        bubble.name = "bubble"
-        sceneBackground.addChild(bubble)
+        if zombieCounter > 5 {
+            fallingItem = SKSpriteNode(imageNamed: "boy")
+            fallingItem.name = "boy"
+            fallingItem.size = CGSize(width: 25, height: 25)
+            fallingItem.zPosition = sizeOfItem
+            zombieCounter = 0
+        } else {
+            fallingItem = SKSpriteNode(imageNamed: "zombie")
+            fallingItem.name = "zombie"
+            let sizeOfItem = CGFloat(arc4random_uniform(91) + 10)
+            fallingItem.size = CGSize(width: sizeOfItem, height: sizeOfItem)
+            fallingItem.zPosition = sizeOfItem
+        }
+        
+        sceneBackground.addChild(fallingItem)
+        
+        //Holder for starting point until actual start is set
         var startingPoint = CGPoint(x: 0, y: 0)
-        let randomValue = arc4random_uniform(UInt32(size.width))
-        print("Random: \(randomValue) + BubbleWidth: \(UInt32(bubble.frame.width))")
-        if randomValue < UInt32(bubble.frame.width) {
-            startingPoint = CGPoint(x: bubble.frame.width / 2, y: 0)
-        } else if randomValue + UInt32(bubble.frame.width) > UInt32(size.width) {
-            startingPoint = CGPoint(x: size.width - (bubble.frame.width / 2), y: 0)
+        let randomValue = arc4random_uniform(UInt32(self.size.width))
+
+        if randomValue < UInt32(fallingItem.frame.width) {
+            startingPoint = CGPoint(x: fallingItem.frame.width / 2, y: 0)
+        } else if randomValue + UInt32(fallingItem.frame.width) > UInt32(size.width) {
+            startingPoint = CGPoint(x: size.width - (fallingItem.frame.width / 2), y: 0)
         } else {
             startingPoint = CGPoint(x: Int(randomValue), y: 0)
         }
  
-        bubble.position = startingPoint
+        fallingItem.position = startingPoint
     }
     
     func dropBubbles() {
@@ -99,21 +115,54 @@ class BubbleScene: SKScene {
         }
     }
     
+    func checkCollisions() {
+        var hitZombies: [SKSpriteNode] = []
+        sceneBackground.enumerateChildNodes(withName: "zombie") { node, _ in
+            let zombie = node as! SKSpriteNode
+            let boys = self.sceneBackground.children.filter { $0.name == "boy" }
+            
+            if boys.count == 0 { return }
+            
+            for boy in boys {
+                if zombie.frame.intersects(boy.frame) {
+                    hitZombies.append(zombie)
+                }
+            }
+
+        }
+        
+        for zombie in hitZombies {
+            print("hit Zombie")
+        }
+    }
+    
+    func boyRunsAway(boy: SKSpriteNode) {
+        
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         
         if isPaused {
             return
         }
-        
+
         let touchLocation = touch.location(in: self)
         
-        for bubble in sceneBackground.children {
-            if bubble.contains(touchLocation) {
-                print("convert: ", Int(bubble.frame.size.width))
-                gamePointsDelegate?.gamePoints(value: Int(bubble.frame.size.width))
-                bubble.removeFromParent()
-            }
+        let nodes = sceneBackground.nodes(at: touchLocation)
+        
+        if nodes.count == 0 {
+            return
         }
+        
+        //This is so that only one node is removed if multiple nodes reside in the same location
+        let maxNode = nodes.reduce(nodes[0]) { $0.zPosition > $1.zPosition ? $0 : $1 }
+        
+        //Don't want to allow user to dismiss boy node
+        if maxNode.name == "boy" {
+            return
+        }
+        gamePointsDelegate?.gamePoints(value: Int(maxNode.frame.size.width))
+        maxNode.removeFromParent()
     }
 }
