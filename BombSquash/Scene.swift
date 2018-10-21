@@ -14,17 +14,13 @@ protocol ScoredPointsDelegate {
     func gamePoints(value: Int)
 }
 
-class BubbleScene: SKScene {
+class StayAlive: SKScene, SKPhysicsContactDelegate {
     
     var gamePointsDelegate: ScoredPointsDelegate?
     
     var sceneBackground: SKSpriteNode!
-    //let playableRect: CGRect
-
     var lastUpdateTime: TimeInterval = 0
-    var dt: TimeInterval = 0
-    var gameTimer: Timer!
-    
+
     var gameSpeed: CGFloat = 10.0
     var zombieCounter = 0
     
@@ -32,7 +28,8 @@ class BubbleScene: SKScene {
     let boyMovePtsPerSec: CGFloat = 450.0
     var velociyOfBoy = CGPoint.zero
     
-    let door = SKSpriteNode(color: UIColor.red, size: CGSize(width: 50, height: 10))
+    let healthPad = SKSpriteNode(color: UIColor.red, size: CGSize(width: 70, height: 10))
+
     
 //    override init(size: CGSize) {
 //        let playableHeight = size.height
@@ -48,6 +45,7 @@ class BubbleScene: SKScene {
 
     override func didMove(to view: SKView) {
 
+        physicsWorld.contactDelegate = self
         anchorPoint = CGPoint(x: 0, y: 1.0)
         sceneBackground = SKSpriteNode(color: UIColor.lightGray, size: size)
         sceneBackground.anchorPoint = CGPoint(x: 0, y: 1.0) //Anchors to top left
@@ -60,32 +58,48 @@ class BubbleScene: SKScene {
         border.restitution = 1
         self.physicsBody = border
        
-        
         addBoy()
-
-        door.name = "door"
-        door.position = CGPoint(x: (size.width / 2), y: (((-1) * size.height) + 10))
-        addChild(door)
+        addHealthPad()
+        
     }
 
     override func update(_ currentTime: CFTimeInterval) {
 
-        //Add bubbles at correct time
         if lastUpdateTime > 0 {
             if currentTime - lastUpdateTime > 1 {
-                addItem()
+                addZombie()
                 lastUpdateTime = currentTime
             }
         } else {
             lastUpdateTime = currentTime
         }
 
-        //Take care of bubble movement and removal of bubble
-        dropBubbles()
-        removeExcessBubbles()
+        dropZombie()
+        removeZombie()
+        
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        //TODO: Need to deal with health loss when boy and zombie collide
+        if contact.bodyB.node?.name == "boy" && contact.bodyA.node?.name == "zombie" {
+            print("Size of zombie: ", contact.bodyA.node?.frame.size.width)
+        }
+        
+    }
+    
+    func addHealthPad() {
+        
+        healthPad.name = "healthPad"
+        healthPad.position = CGPoint(x: (size.width / 2), y: (((-1) * size.height) + 10))
+        healthPad.physicsBody = SKPhysicsBody(rectangleOf: healthPad.size)
+        addChild(healthPad)
+        healthPad.physicsBody?.isDynamic = false
+        healthPad.physicsBody?.friction = 0
+        healthPad.physicsBody?.restitution = 1
 
-        checkCollisions()
-       
+        healthPad.physicsBody?.categoryBitMask = 1
+        healthPad.physicsBody?.collisionBitMask = 2
+        healthPad.physicsBody?.contactTestBitMask = 2
     }
     
     func addBoy() {
@@ -101,26 +115,31 @@ class BubbleScene: SKScene {
         boy.physicsBody?.friction = 0
         boy.physicsBody?.restitution = 1
         boy.physicsBody?.linearDamping = 0
+        boy.physicsBody?.categoryBitMask = 2
+        boy.physicsBody?.collisionBitMask = 1
+        boy.physicsBody?.contactTestBitMask = 1
 
     }
 
-    func addItem() {
+    func addZombie() {
 
-        var fallingItem = SKSpriteNode()
+        var zombie = SKSpriteNode()
 
-        fallingItem = SKSpriteNode(imageNamed: "zombie")
-        fallingItem.name = "zombie"
+        zombie = SKSpriteNode(imageNamed: "zombie")
+        zombie.name = "zombie"
         let sizeOfItem = CGFloat(arc4random_uniform(91) + 10)
-        fallingItem.size = CGSize(width: sizeOfItem, height: sizeOfItem)
-        fallingItem.physicsBody = SKPhysicsBody(rectangleOf: fallingItem.size)
-        fallingItem.physicsBody?.isDynamic = false
+        zombie.size = CGSize(width: sizeOfItem, height: sizeOfItem)
+        zombie.physicsBody = SKPhysicsBody(rectangleOf: zombie.size)
+        zombie.physicsBody?.isDynamic = false
+        zombie.physicsBody?.friction = 0
+        zombie.physicsBody?.restitution = 0
         
-        sceneBackground.addChild(fallingItem)
+        sceneBackground.addChild(zombie)
         
-        fallingItem.position = startingPoint(node: fallingItem)
+        zombie.position = zombieStartingPoint(node: zombie)
     }
     
-    func startingPoint(node: SKSpriteNode) -> CGPoint {
+    func zombieStartingPoint(node: SKSpriteNode) -> CGPoint {
         var startingPoint = CGPoint(x: 0, y: 0)
         let randomValue = arc4random_uniform(UInt32(self.size.width))
         
@@ -134,7 +153,7 @@ class BubbleScene: SKScene {
         return startingPoint
     }
     
-    func dropBubbles() {
+    func dropZombie() {
         for child in sceneBackground.children {
             let xOffset: CGFloat = 0
             let yOffset: CGFloat = gameSpeed
@@ -144,28 +163,13 @@ class BubbleScene: SKScene {
         }
     }
     
-    func removeExcessBubbles() {
+    func removeZombie() {
         for child in sceneBackground.children {
             if child.position.y < (-1)*size.height {
                 child.removeFromParent()
             }
         }
     }
-    
-    func checkCollisions() {
-        var hitZombies: [SKSpriteNode] = []
-
-        sceneBackground.enumerateChildNodes(withName: "zombie") { node, _ in
-            let zombie = node as! SKSpriteNode
-
-                if zombie.frame.intersects(self.boy.frame) {
-
-                    print("You hit a boy")
-                }
-
-        }
-    }
-
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
@@ -175,7 +179,6 @@ class BubbleScene: SKScene {
         }
 
         let touchLocation = touch.location(in: self)
-        
         let nodes = sceneBackground.nodes(at: touchLocation)
         
         if nodes.count == 0 {

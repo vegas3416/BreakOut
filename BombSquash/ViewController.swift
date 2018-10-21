@@ -17,7 +17,7 @@ class ViewController: UIViewController, ScoredPointsDelegate {
     
     @IBOutlet weak var bubbleView: SKView!
     
-    var scene: BubbleScene!
+    var scene: StayAlive!
     var size: CGSize!
     
     var gameStarted: Bool = true
@@ -26,7 +26,7 @@ class ViewController: UIViewController, ScoredPointsDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         size = bubbleView.frame.size
-        scene = BubbleScene(size: size)
+        scene = StayAlive(size: size)
         
         //Don't present this just yet but looks good here
         bubbleView.presentScene(scene)
