@@ -84,7 +84,7 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
         if contact.bodyB.node?.name == "boy" && contact.bodyA.node?.name == "zombie" {
             print("Size of zombie: ", contact.bodyA.node?.frame.size.width)
         }
-        
+        //Still testing
     }
     
     func addHealthPad() {
