@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:BombSquash.xcodeproj">
+      location = "self:/Users/jaso3570/Documents/Studying/BombSquash/StayAlive.xcodeproj">
    </FileRef>
 </Workspace>
