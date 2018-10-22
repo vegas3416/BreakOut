@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		74BE24FB217CC3BE009979DC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 74BE24FA217CC3BE009979DC /* Default-568h@2x.png */; };
 		74C13BCD2176BC94005281A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C13BCC2176BC94005281A3 /* AppDelegate.swift */; };
 		74C13BCF2176BC94005281A3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C13BCE2176BC94005281A3 /* ViewController.swift */; };
 		74C13BD22176BC94005281A3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74C13BD02176BC94005281A3 /* Main.storyboard */; };
@@ -17,7 +16,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		74BE24FA217CC3BE009979DC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		74C13BC92176BC94005281A3 /* StayAlive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StayAlive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74C13BCC2176BC94005281A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		74C13BCE2176BC94005281A3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -42,7 +40,6 @@
 		74C13BC02176BC94005281A3 = {
 			isa = PBXGroup;
 			children = (
-				74BE24FA217CC3BE009979DC /* Default-568h@2x.png */,
 				74C13BCB2176BC94005281A3 /* StayAlive */,
 				74C13BCA2176BC94005281A3 /* Products */,
 			);
@@ -129,7 +126,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				74C13BD72176BC95005281A3 /* LaunchScreen.storyboard in Resources */,
-				74BE24FB217CC3BE009979DC /* Default-568h@2x.png in Resources */,
 				74C13BD42176BC95005281A3 /* Assets.xcassets in Resources */,
 				74C13BD22176BC94005281A3 /* Main.storyboard in Resources */,
 			);
@@ -297,6 +293,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vegas3416.StayAlive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -315,6 +312,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vegas3416.StayAlive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

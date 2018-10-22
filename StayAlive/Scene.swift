@@ -9,9 +9,10 @@
 import Foundation
 
 import SpriteKit
+import CoreMotion
 
 protocol ScoredPointsDelegate {
-    func gamePoints(value: Int)
+    func gamePoints(value: Int, healthPadHit: Bool)
 }
 
 class StayAlive: SKScene, SKPhysicsContactDelegate {
@@ -28,9 +29,10 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
     let boyMovePtsPerSec: CGFloat = 450.0
     var velociyOfBoy = CGPoint.zero
     
-    let healthPad = SKSpriteNode(color: UIColor.red, size: CGSize(width: 70, height: 10))
+    let healthPad = SKSpriteNode(color: UIColor.red, size: CGSize(width: 80, height: 10))
 
-    
+    let motionManager = CMMotionManager()
+    var xAcceleration: CGFloat = 0
 //    override init(size: CGSize) {
 //        let playableHeight = size.height
 //        let playableWidth = size.width
@@ -58,6 +60,8 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
         border.restitution = 1
         self.physicsBody = border
        
+        setupAccelerometerSpeed()
+        
         addBoy()
         addHealthPad()
         
@@ -81,10 +85,46 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
         //TODO: Need to deal with health loss when boy and zombie collide
-        if contact.bodyB.node?.name == "boy" && contact.bodyA.node?.name == "zombie" {
-            print("Size of zombie: ", contact.bodyA.node?.frame.size.width)
+        
+        var firstBody: SKPhysicsBody
+        
+        if (contact.bodyA.categoryBitMask == 1 && contact.bodyB.categoryBitMask == 2) || (contact.bodyA.categoryBitMask == 2 && contact.bodyB.categoryBitMask == 1) {
+            //This is the HealthPad and Boy make contact
+            gamePointsDelegate?.gamePoints(value: 10, healthPadHit: true)
+
+        } else if (contact.bodyA.categoryBitMask == 5 && contact.bodyB.categoryBitMask == 2) || (contact.bodyA.categoryBitMask == 2 && contact.bodyB.categoryBitMask == 5) {
+            //This is the zombie and boy make contact
+            firstBody = (contact.bodyA.node?.name == "zombie") ? contact.bodyA : contact.bodyB
+            
+            guard let zombieFrame = firstBody.node else { return }
+            gamePointsDelegate?.gamePoints(value: Int(zombieFrame.frame.size.width), healthPadHit: false)
+
         }
-        //Still testing
+
+    }
+    
+    
+    //Need to tweak this to work better with the acceleromter
+    override func didSimulatePhysics() {
+        healthPad.position.x += xAcceleration * 30
+        
+        if healthPad.position.x < (self.size.width - 10) {
+            healthPad.position = CGPoint(x: healthPad.position.x + 10, y: healthPad.position.y)
+        } else if healthPad.position.x > (self.size.width + 10) {
+            healthPad.position = CGPoint(x: healthPad.position.x - 10, y: healthPad.position.y)
+        }
+    }
+    
+    func setupAccelerometerSpeed() {
+        motionManager.accelerometerUpdateInterval = 0.1
+        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data: CMAccelerometerData?, error: Error?) in
+            if let accelerometerData = data {
+                
+                let acceleration = accelerometerData.acceleration
+                print("Accel: " , acceleration.x)
+                self.xAcceleration = CGFloat(acceleration.x) * 0.5 + self.xAcceleration * 0.4
+            }
+        }
     }
     
     func addHealthPad() {
@@ -106,15 +146,16 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
         
         boy.name = "boy"
         boy.size = CGSize(width: 30, height: 30)
-        addChild(boy)
         boy.position = CGPoint(x: boy.size.width, y: (-1) * boy.size.height + 10)
         boy.physicsBody = SKPhysicsBody(circleOfRadius: boy.size.width / 2)
-        boy.physicsBody?.applyImpulse(CGVector(dx: 10 , dy: 0))
-
+        addChild(boy)
+        
+        boy.physicsBody?.applyImpulse(CGVector(dx: 3 , dy: -3))
         boy.physicsBody?.isDynamic = true
         boy.physicsBody?.friction = 0
         boy.physicsBody?.restitution = 1
         boy.physicsBody?.linearDamping = 0
+        
         boy.physicsBody?.categoryBitMask = 2
         boy.physicsBody?.collisionBitMask = 1
         boy.physicsBody?.contactTestBitMask = 1
@@ -127,12 +168,16 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
 
         zombie = SKSpriteNode(imageNamed: "zombie")
         zombie.name = "zombie"
-        let sizeOfItem = CGFloat(arc4random_uniform(91) + 10)
+        let sizeOfItem = CGFloat(arc4random_uniform(91) + 20)
         zombie.size = CGSize(width: sizeOfItem, height: sizeOfItem)
         zombie.physicsBody = SKPhysicsBody(rectangleOf: zombie.size)
         zombie.physicsBody?.isDynamic = false
         zombie.physicsBody?.friction = 0
         zombie.physicsBody?.restitution = 0
+        
+        zombie.physicsBody?.categoryBitMask = 5
+        zombie.physicsBody?.collisionBitMask = 2
+        zombie.physicsBody?.contactTestBitMask = 2
         
         sceneBackground.addChild(zombie)
         
@@ -187,8 +232,6 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
         
         //This is so that only one node is removed if multiple nodes reside in the same location
         let maxNode = nodes.reduce(nodes[0]) { $0.frame.width > $1.frame.width ? $0 : $1 }
-        
-        gamePointsDelegate?.gamePoints(value: Int(maxNode.frame.size.width))
         maxNode.removeFromParent()
     }
 }

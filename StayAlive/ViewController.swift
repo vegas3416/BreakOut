@@ -13,7 +13,7 @@ class ViewController: UIViewController, ScoredPointsDelegate {
    
 
     @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var pointsScored: UILabel!
+    @IBOutlet weak var health: UILabel!
     
     @IBOutlet weak var bubbleView: SKView!
     
@@ -21,7 +21,7 @@ class ViewController: UIViewController, ScoredPointsDelegate {
     var size: CGSize!
     
     var gameStarted: Bool = true
-    var points: Int = 0
+    var healthValue: Int = 100
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +31,7 @@ class ViewController: UIViewController, ScoredPointsDelegate {
         //Don't present this just yet but looks good here
         bubbleView.presentScene(scene)
         gameStatus()
-        
+        health.text = "\(healthValue)"
         scene.gamePointsDelegate = self
     }
 
@@ -52,7 +52,6 @@ class ViewController: UIViewController, ScoredPointsDelegate {
             gameStarted = true
             
             scene.isPaused = true
-
         }
     }
     
@@ -62,44 +61,61 @@ class ViewController: UIViewController, ScoredPointsDelegate {
         
     }
     
-    func gamePoints(value: Int) {
-
-        switch value {
-        case 0...10:
-            points = points + 10
-            pointsScored.text = "\(points)"
-        case 11...20:
-            points = points + 9
-            pointsScored.text = "\(points)"
-        case 21...30:
-            points = points + 8
-            pointsScored.text = "\(points)"
-        case 31...40:
-            points = points + 7
-            pointsScored.text = "\(points)"
-        case 41...50:
-            points = points + 6
-            pointsScored.text = "\(points)"
-        case 51...60:
-            points = points + 5
-            pointsScored.text = "\(points)"
-        case 61...70:
-            points = points + 4
-            pointsScored.text = "\(points)"
-        case 71...80:
-            points = points + 3
-            pointsScored.text = "\(points)"
-        case 81...90:
-            points = points + 2
-            pointsScored.text = "\(points)"
-        case 100:
-            points = points + 1
-            pointsScored.text = "\(points)"
-        default:
-            points = points + 1
-            pointsScored.text = "\(points)"
-        }
+    func aliveOrDead() {
+        
     }
     
+    //TODO: If points are 100 return if zero YOU LOSE needs setup
+    func gamePoints(value: Int, healthPadHit: Bool) {
+        
+        if healthPadHit {
+            if healthValue == 100 {
+                return
+            } else {
+                healthValue = healthValue + 10
+                if healthValue > 100 {
+                    healthValue = 100
+                }
+                health.text = "\(healthValue)"
+            }
+        } else {
+
+            switch value {
+            case 0...10:
+                healthValue = healthValue - 10
+                health.text = "\(healthValue)"
+            case 11...20:
+                healthValue = healthValue - 9
+                health.text = "\(healthValue)"
+            case 21...30:
+                healthValue = healthValue - 8
+                health.text = "\(healthValue)"
+            case 31...40:
+                healthValue = healthValue - 7
+                health.text = "\(healthValue)"
+            case 41...50:
+                healthValue = healthValue - 6
+                health.text = "\(healthValue)"
+            case 51...60:
+                healthValue = healthValue - 5
+                health.text = "\(healthValue)"
+            case 61...70:
+                healthValue = healthValue - 4
+                health.text = "\(healthValue)"
+            case 71...80:
+                healthValue = healthValue - 3
+                health.text = "\(healthValue)"
+            case 81...90:
+                healthValue = healthValue - 2
+                health.text = "\(healthValue)"
+            case 100:
+                healthValue = healthValue - 1
+                health.text = "\(healthValue)"
+            default:
+                healthValue = healthValue - 1
+                health.text = "\(healthValue)"
+            }
+        }
+    }
 }
 

@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,28 +11,28 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="BombSquash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LQO-8E-VG4" customClass="SKView">
-                                <rect key="frame" x="0.0" y="95.5" width="375" height="571.5"/>
+                                <rect key="frame" x="0.0" y="95.5" width="600" height="504.5"/>
                                 <color key="backgroundColor" red="0.090196078430000007" green="0.72549019609999998" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P0Q-PA-mgl">
-                                <rect key="frame" x="260" y="30" width="100" height="30"/>
+                                <rect key="frame" x="372.5" y="30" width="212.5" height="30"/>
                                 <state key="normal" title="Start"/>
                                 <connections>
                                     <action selector="gameStatusButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="y6Z-7T-lYn"/>
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="10" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="aXa-7E-gbr">
-                                <rect key="frame" x="18" y="60.5" width="339" height="31"/>
+                                <rect key="frame" x="18" y="60.5" width="564" height="31"/>
                                 <connections>
                                     <action selector="gameSpeedSlider:" destination="BYZ-38-t0r" eventType="valueChanged" id="rXH-1c-l1F"/>
                                 </connections>
                             </slider>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="26y-iA-Omn">
-                                <rect key="frame" x="135" y="30" width="105" height="20.5"/>
+                                <rect key="frame" x="247.5" y="30" width="105" height="20.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k7e-vm-VPC">
                                         <rect key="frame" x="0.0" y="0.0" width="49.5" height="20.5"/>
@@ -78,7 +74,7 @@
                     </view>
                     <connections>
                         <outlet property="bubbleView" destination="LQO-8E-VG4" id="UR7-7M-Bc6"/>
-                        <outlet property="pointsScored" destination="YxF-YN-dVM" id="09M-kM-3Vs"/>
+                        <outlet property="health" destination="YxF-YN-dVM" id="09M-kM-3Vs"/>
                         <outlet property="startButton" destination="P0Q-PA-mgl" id="oIB-S0-NCx"/>
                     </connections>
                 </viewController>
