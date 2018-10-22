@@ -12,7 +12,7 @@ import SpriteKit
 import CoreMotion
 
 protocol ScoredPointsDelegate {
-    func gamePoints(value: Int, healthPadHit: Bool)
+    func gamePoints(value: Int, healthPadHit: Bool, zombieKilled: Bool)
 }
 
 class StayAlive: SKScene, SKPhysicsContactDelegate {
@@ -26,10 +26,9 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
     var zombieCounter = 0
     
     let boy = SKSpriteNode(imageNamed: "boy")
-    let boyMovePtsPerSec: CGFloat = 450.0
-    var velociyOfBoy = CGPoint.zero
+    let background = SKSpriteNode(imageNamed: "background")
     
-    let healthPad = SKSpriteNode(color: UIColor.red, size: CGSize(width: 80, height: 10))
+    let healthPad = SKSpriteNode(imageNamed: "firstAid")//SKSpriteNode(color: UIColor.red, size: CGSize(width: 200, height: 10))
 
     let motionManager = CMMotionManager()
     var xAcceleration: CGFloat = 0
@@ -49,7 +48,9 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
 
         physicsWorld.contactDelegate = self
         anchorPoint = CGPoint(x: 0, y: 1.0)
-        sceneBackground = SKSpriteNode(color: UIColor.lightGray, size: size)
+        //sceneBackground = SKSpriteNode(color: UIColor.lightGray, size: size)
+        sceneBackground = background
+        sceneBackground.size = self.size
         sceneBackground.anchorPoint = CGPoint(x: 0, y: 1.0) //Anchors to top left
         sceneBackground.position = CGPoint(x: 0, y: 0)
         sceneBackground.zPosition = -1
@@ -60,6 +61,7 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
         border.restitution = 1
         self.physicsBody = border
        
+        self.physicsWorld.gravity = CGVector.zero
         setupAccelerometerSpeed()
         
         addBoy()
@@ -90,39 +92,39 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
         
         if (contact.bodyA.categoryBitMask == 1 && contact.bodyB.categoryBitMask == 2) || (contact.bodyA.categoryBitMask == 2 && contact.bodyB.categoryBitMask == 1) {
             //This is the HealthPad and Boy make contact
-            gamePointsDelegate?.gamePoints(value: 10, healthPadHit: true)
+            gamePointsDelegate?.gamePoints(value: 10, healthPadHit: true, zombieKilled: false)
 
         } else if (contact.bodyA.categoryBitMask == 5 && contact.bodyB.categoryBitMask == 2) || (contact.bodyA.categoryBitMask == 2 && contact.bodyB.categoryBitMask == 5) {
             //This is the zombie and boy make contact
             firstBody = (contact.bodyA.node?.name == "zombie") ? contact.bodyA : contact.bodyB
             
             guard let zombieFrame = firstBody.node else { return }
-            gamePointsDelegate?.gamePoints(value: Int(zombieFrame.frame.size.width), healthPadHit: false)
+            gamePointsDelegate?.gamePoints(value: Int(zombieFrame.frame.size.width), healthPadHit: false, zombieKilled: false)
 
         }
-
     }
     
     
     //Need to tweak this to work better with the acceleromter
     override func didSimulatePhysics() {
-        healthPad.position.x += xAcceleration * 30
+        healthPad.position.x += xAcceleration * 40
         
-        if healthPad.position.x < (self.size.width - 10) {
-            healthPad.position = CGPoint(x: healthPad.position.x + 10, y: healthPad.position.y)
-        } else if healthPad.position.x > (self.size.width + 10) {
-            healthPad.position = CGPoint(x: healthPad.position.x - 10, y: healthPad.position.y)
+        if healthPad.position.x < -20 {
+            print(healthPad.position.x)
+            healthPad.position = CGPoint(x: self.size.width + 20, y: healthPad.position.y)
+        } else if healthPad.position.x > (self.size.width + 20) {
+            healthPad.position = CGPoint(x: -20, y: healthPad.position.y)
         }
     }
     
     func setupAccelerometerSpeed() {
-        motionManager.accelerometerUpdateInterval = 0.1
+        motionManager.accelerometerUpdateInterval = 0.2
         motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data: CMAccelerometerData?, error: Error?) in
             if let accelerometerData = data {
                 
                 let acceleration = accelerometerData.acceleration
-                print("Accel: " , acceleration.x)
-                self.xAcceleration = CGFloat(acceleration.x) * 0.5 + self.xAcceleration * 0.4
+                //print("Accel: " , acceleration.x)
+                self.xAcceleration = CGFloat(acceleration.x) * 0.75 + self.xAcceleration * 0.25
             }
         }
     }
@@ -130,6 +132,7 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
     func addHealthPad() {
         
         healthPad.name = "healthPad"
+        healthPad.size = CGSize(width: 250, height: 30)
         healthPad.position = CGPoint(x: (size.width / 2), y: (((-1) * size.height) + 10))
         healthPad.physicsBody = SKPhysicsBody(rectangleOf: healthPad.size)
         addChild(healthPad)
@@ -145,16 +148,17 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
     func addBoy() {
         
         boy.name = "boy"
-        boy.size = CGSize(width: 30, height: 30)
+        boy.size = CGSize(width: 45, height: 45)
         boy.position = CGPoint(x: boy.size.width, y: (-1) * boy.size.height + 10)
         boy.physicsBody = SKPhysicsBody(circleOfRadius: boy.size.width / 2)
         addChild(boy)
-        
-        boy.physicsBody?.applyImpulse(CGVector(dx: 3 , dy: -3))
+        boy.physicsBody?.applyImpulse(CGVector(dx: 20 , dy: 20))
+
         boy.physicsBody?.isDynamic = true
         boy.physicsBody?.friction = 0
         boy.physicsBody?.restitution = 1
         boy.physicsBody?.linearDamping = 0
+        boy.physicsBody?.angularDamping = 0
         
         boy.physicsBody?.categoryBitMask = 2
         boy.physicsBody?.collisionBitMask = 1
@@ -232,6 +236,7 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
         
         //This is so that only one node is removed if multiple nodes reside in the same location
         let maxNode = nodes.reduce(nodes[0]) { $0.frame.width > $1.frame.width ? $0 : $1 }
+        gamePointsDelegate?.gamePoints(value: Int(maxNode.frame.size.width), healthPadHit: false, zombieKilled: true)
         maxNode.removeFromParent()
     }
 }

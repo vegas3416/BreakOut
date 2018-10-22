@@ -99,6 +99,7 @@
 				TargetAttributes = {
 					74C13BC82176BC94005281A3 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -294,7 +295,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vegas3416.StayAlive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -313,7 +314,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vegas3416.StayAlive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
