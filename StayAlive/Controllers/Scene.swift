@@ -28,27 +28,16 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
     let boy = SKSpriteNode(imageNamed: "boy")
     let background = SKSpriteNode(imageNamed: "background")
     
-    let healthPad = SKSpriteNode(imageNamed: "firstAid")//SKSpriteNode(color: UIColor.red, size: CGSize(width: 200, height: 10))
+    let healthPad = SKSpriteNode(imageNamed: "firstAid")
 
     let motionManager = CMMotionManager()
     var xAcceleration: CGFloat = 0
-//    override init(size: CGSize) {
-//        let playableHeight = size.height
-//        let playableWidth = size.width
-//        playableRect = CGRect( x: 0, y: playableWidth, width: playableWidth, height: playableHeight)
-//        super.init(size: size)
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
 
     override func didMove(to view: SKView) {
 
         physicsWorld.contactDelegate = self
         anchorPoint = CGPoint(x: 0, y: 1.0)
-        //sceneBackground = SKSpriteNode(color: UIColor.lightGray, size: size)
+ 
         sceneBackground = background
         sceneBackground.size = self.size
         sceneBackground.anchorPoint = CGPoint(x: 0, y: 1.0) //Anchors to top left
@@ -70,7 +59,7 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
     }
 
     override func update(_ currentTime: CFTimeInterval) {
-
+        print("GameSpeed:" , gameSpeed)
         if lastUpdateTime > 0 {
             if currentTime - lastUpdateTime > 1 {
                 addZombie()
@@ -86,7 +75,6 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        //TODO: Need to deal with health loss when boy and zombie collide
         
         var firstBody: SKPhysicsBody
         
@@ -100,12 +88,9 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
             
             guard let zombieFrame = firstBody.node else { return }
             gamePointsDelegate?.gamePoints(value: Int(zombieFrame.frame.size.width), healthPadHit: false, zombieKilled: false)
-
         }
     }
-    
-    
-    //Need to tweak this to work better with the acceleromter
+
     override func didSimulatePhysics() {
         healthPad.position.x += xAcceleration * 40
         
