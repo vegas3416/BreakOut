@@ -13,7 +13,7 @@ import UIKit
 
 
 extension UIImage {
-    //func resizeImage(_ dimension: CGFloat, opaque: Bool, contentMode: UIViewContentMode = .scaleAspectFit) -> UIImage {
+    
     func resizeImage(_ dimension: CGFloat, opaque: Bool, contentMode: UIView.ContentMode = .scaleAspectFit) -> UIImage {
         var width: CGFloat
         var height: CGFloat
