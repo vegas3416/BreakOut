@@ -135,16 +135,18 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
     }
 
     override func didSimulatePhysics() {
+        //This value can be played with to get a better feel for how fast/slow you want pad to move
         healthPad.position.x += xAcceleration * 40
         
-        if healthPad.position.x < -20 {
-            healthPad.position = CGPoint(x: self.size.width + 20, y: healthPad.position.y)
-        } else if healthPad.position.x > (self.size.width + 20) {
-            healthPad.position = CGPoint(x: -20, y: healthPad.position.y)
+        if healthPad.position.x <= healthPad.size.width / 2 { // < -20
+            healthPad.position = CGPoint(x: healthPad.size.width / 2, y: healthPad.position.y)//CGPoint(x: self.size.width + 20, y: healthPad.position.y)
+        } else if healthPad.position.x >= (self.size.width - healthPad.size.width / 2) { //healthPad.position.x > (self.size.width + 20) {
+            healthPad.position = CGPoint(x: self.size.width - healthPad.size.width / 2, y: healthPad.position.y)
         }
     }
     
     func setupAccelerometerSpeed() {
+        
         motionManager.accelerometerUpdateInterval = 0.2
         motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data: CMAccelerometerData?, error: Error?) in
             if let accelerometerData = data {
@@ -159,7 +161,7 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
     func addHealthPad() {
         
         healthPad.name = "healthPad"
-        healthPad.size = CGSize(width: size.width / 2.5, height: 30)
+        healthPad.size = CGSize(width: size.width / 3, height: 30)
         healthPad.position = CGPoint(x: (size.width / 2), y: (((-1) * size.height) + 10))
         healthPad.physicsBody = SKPhysicsBody(rectangleOf: healthPad.size)
         addChild(healthPad)
