@@ -26,20 +26,26 @@ There are levels built into the the stock game play. You'll notice a zombie coun
 
 ![image](https://user-images.githubusercontent.com/25307091/47431910-8f8dc580-d762-11e8-9d22-656c7537d773.png)
 
-## Screenshots
+###### GamePlay
+_______________________________________
 
+Initial flow of game is you have the start screen which will show the previous score once you have died or restart the game.
+In the game the goal is to "STAY ALIVE". Zombies will fall from the top attempting to attack you. You can tap on the zombies to kill/dismiss them but if you hit a zombie you will lose points based on their size. Larger zombies less points than smaller ones. The bar on the bottom is moved with the tilting of the device. The bar also adds the capability to regain 10points to your health as the game gets harder you will need all you can get. If the user decides the game is to hard upfront they can adjust the game speed by themselves but once done this takes the user out of the level aspect of the game and provides more of a free game play. If user plays in levels each level consists of getting past 20 zombies. After 20 zombies have fallen the game speeds up but so does how fast the zombies attack. Game allows the user to pause the game to restart or resume from where they left off.
+
+![image](https://user-images.githubusercontent.com/25307091/47433083-4723d700-d765-11e8-8dda-fce7c5d9c802.png)
+
+If the user dies you'll get a lovely parting gift.
+
+![image](https://user-images.githubusercontent.com/25307091/47433141-66baff80-d765-11e8-843f-711933cbac02.png)
 
 ###### My Feedback from the challenge
 
-I really enjoyed this challenge. It did take me a little longer than I'd hope due to work loads and losing internet but overall satisfied with the outcome. 
+I really enjoyed this challenge. I for one have never used SpriteKit but decided to give it a shot. I think overall it turned out pretty good.
 
 ###### Things I'd add if I were building this out more:
 
-- [ ] A way to purchase tickets based on events
-- [ ] A way to go deeper into the ticker/event to see what other users at the particular venue had to say
-- [ ] A chat functionality to talk to other users/friends prior to events
-- [ ] A way to call the venue if needed. Think about page for the venue.
+- [ ] Adding in another level of animations on the zombie when they are tapped
+- [ ] Sound to the game
+- [ ] More aspects to how the levels work and maybe adding in different characters so that if a user taps on say a human      that comes through vs a zombie they can gain another life or maybe removing the health bar and adding in immunity shots or health icons that give the user health vs the bar at the bottom.
 
 *This list could literally go on forever but these are just some highlights* 
-
-*Note: The app icons in the app are NOT mine and should not be distributed. They are just to be used for demo purposes and not to be used for sale*e
