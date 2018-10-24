@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  BombSquash
+//  Stay Alive
 //
 //  Created by Jason Villegas on 10/16/18.
 //  Copyright © 2018 Jason Villegas. All rights reserved.
@@ -189,7 +189,7 @@ class GameViewController: UIViewController, ScoredPointsDelegate {
         healthValue = healthValue - value
         return "\(healthValue)%"
     }
-    //TODO: If points are 100 return if zero YOU LOSE needs setup
+
     func gamePoints(value: Int, healthPadHit: Bool, zombieKilled: Bool) {
         if healthPadHit {
             if healthValue == 100 {
