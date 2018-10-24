@@ -35,7 +35,7 @@
                                     <color key="titleColor" red="0.96862745100000003" green="0.23921568630000001" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" identifier="GameScene" id="g7a-Y3-lZd"/>
+                                    <action selector="startButtonSelected:" destination="dNd-eu-p3Z" eventType="touchUpInside" id="PcF-Jz-gXI"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Score:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JRm-Qt-SZB">
@@ -93,7 +93,28 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LQO-8E-VG4" customClass="SKView">
                                 <rect key="frame" x="0.0" y="113" width="375" height="554"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zombie:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Oc-YX-yXM">
+                                        <rect key="frame" x="20" y="20" width="67.5" height="19"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="15"/>
+                                        <color key="textColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1S-Kl-BnW">
+                                        <rect key="frame" x="92.5" y="20" width="21.5" height="21.5"/>
+                                        <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="17"/>
+                                        <color key="textColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" red="0.090196078430000007" green="0.72549019609999998" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="a1S-Kl-BnW" firstAttribute="leading" secondItem="4Oc-YX-yXM" secondAttribute="trailing" constant="5" id="1jV-Gi-BVM"/>
+                                    <constraint firstItem="4Oc-YX-yXM" firstAttribute="top" secondItem="LQO-8E-VG4" secondAttribute="top" constant="20" id="48R-2K-OX3"/>
+                                    <constraint firstItem="a1S-Kl-BnW" firstAttribute="top" secondItem="LQO-8E-VG4" secondAttribute="top" constant="20" id="KyI-Dv-sbY"/>
+                                    <constraint firstItem="4Oc-YX-yXM" firstAttribute="leading" secondItem="LQO-8E-VG4" secondAttribute="leading" constant="20" id="Yzz-MN-V3u"/>
+                                </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P0Q-PA-mgl" userLabel="Pause">
                                 <rect key="frame" x="310" y="20" width="35" height="35"/>
@@ -201,6 +222,8 @@
                         <outlet property="healthTitle" destination="k7e-vm-VPC" id="IUE-E9-Kzs"/>
                         <outlet property="pauseButton" destination="P0Q-PA-mgl" id="KxL-11-KQ1"/>
                         <outlet property="score" destination="FPX-Me-uf5" id="2xY-c4-BPx"/>
+                        <outlet property="zombieCounter" destination="a1S-Kl-BnW" id="1gx-M0-2GN"/>
+                        <outlet property="zombieCounterTitleLabel" destination="4Oc-YX-yXM" id="QBP-pT-Ntl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

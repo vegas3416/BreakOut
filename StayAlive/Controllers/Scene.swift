@@ -13,17 +13,19 @@ import CoreMotion
 
 protocol ScoredPointsDelegate {
     func gamePoints(value: Int, healthPadHit: Bool, zombieKilled: Bool)
+    func zombieCounter(counter: Int, level: Int)
 }
 
 class StayAlive: SKScene, SKPhysicsContactDelegate {
     
     var gamePointsDelegate: ScoredPointsDelegate?
+    var zombieCounter = 20
+    var level = 1 //Goes up to 5
     
     var sceneBackground: SKSpriteNode!
     var lastUpdateTime: TimeInterval = 0
 
     var gameSpeed: CGFloat = 10.0
-    var zombieCounter = 0
     
     let boy = SKSpriteNode(imageNamed: "boy")
     let background = SKSpriteNode(imageNamed: "background")
@@ -59,19 +61,47 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
     }
 
     override func update(_ currentTime: CFTimeInterval) {
-        print("GameSpeed:" , gameSpeed)
+        
         if lastUpdateTime > 0 {
-            if currentTime - lastUpdateTime > 1 {
-                addZombie()
-                lastUpdateTime = currentTime
+            switch level {
+            case 1:
+                if currentTime - lastUpdateTime > 1 {
+                    addZombie()
+                    lastUpdateTime = currentTime
+                }
+            case 2:
+                if currentTime - lastUpdateTime > 0.8 {
+                    addZombie()
+                    lastUpdateTime = currentTime
+                }
+            case 3:
+                if currentTime - lastUpdateTime > 0.6 {
+                    addZombie()
+                    lastUpdateTime = currentTime
+                }
+            case 4:
+                if currentTime - lastUpdateTime > 0.4 {
+                    addZombie()
+                    lastUpdateTime = currentTime
+                }
+            case 5:
+                if currentTime - lastUpdateTime > 0.2 {
+                    addZombie()
+                    lastUpdateTime = currentTime
+                }
+            default:
+                if currentTime - lastUpdateTime > 1 {
+                    addZombie()
+                    lastUpdateTime = currentTime
+                }
             }
+
         } else {
             lastUpdateTime = currentTime
         }
 
         dropZombie()
         removeZombie()
-        
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -87,7 +117,20 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
             firstBody = (contact.bodyA.node?.name == "zombie") ? contact.bodyA : contact.bodyB
             
             guard let zombieFrame = firstBody.node else { return }
-            gamePointsDelegate?.gamePoints(value: Int(zombieFrame.frame.size.width), healthPadHit: false, zombieKilled: false)
+
+            if contact.bodyB.node?.physicsBody?.velocity.dx == 0 || contact.bodyB.node?.physicsBody?.velocity.dy == 0 {
+                guard let boyBody = contact.bodyB.node else { return }
+                print(boyBody.position.y)
+                if (-1)*boyBody.position.y > 510 {
+                    gamePointsDelegate?.gamePoints(value: 101, healthPadHit: false, zombieKilled: false)
+                } else {
+                    contact.bodyB.node?.physicsBody?.applyImpulse(CGVector(dx: 20 , dy: 20))
+                }
+                
+            } else {
+                print("Zombie size: \(zombieFrame.frame.size.width)")
+                gamePointsDelegate?.gamePoints(value: Int(zombieFrame.frame.size.width), healthPadHit: false, zombieKilled: false)
+            }
         }
     }
 
@@ -95,7 +138,6 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
         healthPad.position.x += xAcceleration * 40
         
         if healthPad.position.x < -20 {
-            print(healthPad.position.x)
             healthPad.position = CGPoint(x: self.size.width + 20, y: healthPad.position.y)
         } else if healthPad.position.x > (self.size.width + 20) {
             healthPad.position = CGPoint(x: -20, y: healthPad.position.y)
@@ -117,7 +159,7 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
     func addHealthPad() {
         
         healthPad.name = "healthPad"
-        healthPad.size = CGSize(width: 250, height: 30)
+        healthPad.size = CGSize(width: size.width / 2.5, height: 30)
         healthPad.position = CGPoint(x: (size.width / 2), y: (((-1) * size.height) + 10))
         healthPad.physicsBody = SKPhysicsBody(rectangleOf: healthPad.size)
         addChild(healthPad)
@@ -157,7 +199,7 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
 
         zombie = SKSpriteNode(imageNamed: "zombie")
         zombie.name = "zombie"
-        let sizeOfItem = CGFloat(arc4random_uniform(91) + 20)
+        let sizeOfItem = CGFloat(arc4random_uniform(81) + 20)
         zombie.size = CGSize(width: sizeOfItem, height: sizeOfItem)
         zombie.physicsBody = SKPhysicsBody(rectangleOf: zombie.size)
         zombie.physicsBody?.isDynamic = false
@@ -169,8 +211,17 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
         zombie.physicsBody?.contactTestBitMask = 2
         
         sceneBackground.addChild(zombie)
-        
         zombie.position = zombieStartingPoint(node: zombie)
+        
+        if zombieCounter > 0 {
+            zombieCounter -= 1
+        } else {
+            zombieCounter = 20
+            if level < 5 {
+                level += 1
+            }
+        }
+        gamePointsDelegate?.zombieCounter(counter: zombieCounter, level: level)
     }
     
     func zombieStartingPoint(node: SKSpriteNode) -> CGPoint {

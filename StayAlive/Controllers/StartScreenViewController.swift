@@ -21,9 +21,12 @@ class StartScreenViewController: UIViewController, YouDeadDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var vc = GameViewController()
-        
-        
+    }
+    
+    @IBAction func startButtonSelected(_ sender: UIButton) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "GameVC") as! GameViewController
+        vc.delegate = self
+        present(vc, animated: true, completion: nil)
     }
     
     func youDead(score: Int) {

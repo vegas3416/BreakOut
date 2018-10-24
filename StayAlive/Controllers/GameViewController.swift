@@ -9,7 +9,8 @@
 import UIKit
 import SpriteKit
 
-protocol YouDeadDelegate: class {
+protocol YouDeadDelegate {
+    //This is sent to the startViewcontroller to update the score label
     func youDead(score: Int)
 }
 
@@ -30,15 +31,22 @@ class GameViewController: UIViewController, ScoredPointsDelegate {
     var scene: StayAlive!
     var size: CGSize!
     
-    weak var delegate: YouDeadDelegate?
+    var delegate: YouDeadDelegate?
     
     @IBOutlet weak var score: UILabel!
     var totalPoints: Int = 0
     
+    @IBOutlet weak var zombieCounter: UILabel!
+    @IBOutlet weak var zombieCounterTitleLabel: UILabel!
+    
+    var sliderManuallyUpdated: Bool = false
+    var gameLevel: Int = 1
+    
+    var alertController = UIAlertController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-  
-        
+
         size = bubbleView.frame.size
         scene = StayAlive(size: size)
         bubbleView.presentScene(scene)
@@ -53,24 +61,88 @@ class GameViewController: UIViewController, ScoredPointsDelegate {
         
         scene.gameSpeed = CGFloat(gameSpeed)
     }
+    
+    func didUserManuallyUpdateSlider() {
+        
+        if gameLevel == 1 && gameSlider.value > 10 {
+            sliderManuallyUpdated = true
+        } else if gameLevel == 2 && gameSlider.value != 30 {
+            sliderManuallyUpdated = true
+        } else if gameLevel == 3 && gameSlider.value != 50 {
+            sliderManuallyUpdated = true
+        } else if gameLevel == 4 && gameSlider.value != 70 {
+            sliderManuallyUpdated = true
+        } else if gameLevel == 5 && gameSlider.value != 90 {
+            sliderManuallyUpdated = true
+        }
+        
+    }
+    
+    func zombieCounter(counter: Int, level: Int) {
+        gameLevel = level
+        
+        if sliderManuallyUpdated {
+            return
+        }
+        
+        switch level {
+        case 1:
+            gameSlider.value = 10
+            gameSpeedSlider(gameSlider)
+        case 2:
+            gameSlider.value = 30
+            gameSpeedSlider(gameSlider)
+        case 3:
+            gameSlider.value = 50
+            gameSpeedSlider(gameSlider)
+        case 4:
+            gameSlider.value = 70
+            gameSpeedSlider(gameSlider)
+        case 5:
+            gameSlider.value = 90
+            gameSpeedSlider(gameSlider)
+        default:
+            gameSlider.value = 10
+            gameSpeedSlider(gameSlider)
+        }
+        zombieCounter.text = "\(counter)"
+    }
 
     @IBAction func gameStatusButtonPressed(_ sender: Any) {
         gameStatus()
     }
 
     func gameStatus(){
-        if scene.isPaused {
-            scene.isPaused = false
-        } else {
-            scene.isPaused = true
+        
+        scene.isPaused = true
+
+        alertController = UIAlertController(title: "Paused", message: "Would you like to resume game or restart?", preferredStyle: .alert)
+        
+        let resumeAction = UIAlertAction(title: "Resume", style: .default) { _ in
+            self.scene.isPaused = false
         }
+        
+        let restartAction = UIAlertAction(title: "Restart", style: .default) { _ in
+            self.delegate?.youDead(score: self.totalPoints)
+            self.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(resumeAction)
+        alertController.addAction(restartAction)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     @IBAction func gameSpeedSlider(_ sender: UISlider) {
+        didUserManuallyUpdateSlider()
         scene.gameSpeed = CGFloat(sender.value)
+        
+        if sliderManuallyUpdated {
+            zombieCounter.isHidden = true
+            zombieCounterTitleLabel.isHidden = true
+        }
     }
     
     func youDead() {
+        
         scene.isPaused = true
         let messageString: String
         if totalPoints < 100 {
@@ -83,15 +155,14 @@ class GameViewController: UIViewController, ScoredPointsDelegate {
             messageString = "Now we are talking...Next time take the shotgun. We will take out even more next time. Great Score: \(totalPoints)!!"
         }
         
-        let alertController = UIAlertController(title: "YOU DEAD!!", message: messageString, preferredStyle: .alert)
-        
+        alertController = UIAlertController(title: "YOU DEAD!!", message: messageString, preferredStyle: .alert)
+
         let action = UIAlertAction(title: "OK", style: .default) { (alert) in
-            self.dismiss(animated: true, completion: {
-                 self.delegate?.youDead(score: self.totalPoints)
-            })
+            self.delegate?.youDead(score: self.totalPoints)
+            self.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(action)
-        
+
         self.present(alertController, animated: true, completion: nil)
     }
     
@@ -139,8 +210,6 @@ class GameViewController: UIViewController, ScoredPointsDelegate {
                     totalPoints += 10
                     score.text = "\(totalPoints)"
                 } else {
-                   // healthValue = healthValue - 10
-                    
                     health.text = noNegativeScore(value: 10)
                 }
             case 11...20:
@@ -148,7 +217,6 @@ class GameViewController: UIViewController, ScoredPointsDelegate {
                     totalPoints += 9
                     score.text = "\(totalPoints)"
                 } else {
-                   // healthValue = healthValue - 9
                     health.text = noNegativeScore(value: 9)
                 }
             case 21...30:
@@ -156,7 +224,6 @@ class GameViewController: UIViewController, ScoredPointsDelegate {
                     totalPoints += 8
                     score.text = "\(totalPoints)"
                 } else {
-                    //healthValue = healthValue - 8
                     health.text = noNegativeScore(value: 8)
                 }
             case 31...40:
@@ -164,7 +231,6 @@ class GameViewController: UIViewController, ScoredPointsDelegate {
                     totalPoints += 7
                     score.text = "\(totalPoints)"
                 } else {
-                    //healthValue = healthValue - 7
                     health.text = noNegativeScore(value: 7)
                 }
             case 41...50:
@@ -172,7 +238,6 @@ class GameViewController: UIViewController, ScoredPointsDelegate {
                     totalPoints += 6
                     score.text = "\(totalPoints)"
                 } else {
-                    //healthValue = healthValue - 6
                     health.text = noNegativeScore(value: 6)
                 }
             case 51...60:
@@ -180,7 +245,6 @@ class GameViewController: UIViewController, ScoredPointsDelegate {
                     totalPoints += 5
                     score.text = "\(totalPoints)"
                 } else {
-                    //healthValue = healthValue - 5
                     health.text = noNegativeScore(value: 5)
                 }
             case 61...70:
@@ -188,7 +252,6 @@ class GameViewController: UIViewController, ScoredPointsDelegate {
                     totalPoints += 4
                     score.text = "\(totalPoints)"
                 } else {
-                    //healthValue = healthValue - 4
                     health.text = noNegativeScore(value: 4)
                 }
             case 71...80:
@@ -196,7 +259,6 @@ class GameViewController: UIViewController, ScoredPointsDelegate {
                     totalPoints += 3
                     score.text = "\(totalPoints)"
                 } else {
-                    //healthValue = healthValue - 3
                     health.text = noNegativeScore(value: 3)
                 }
             case 81...90:
@@ -204,15 +266,13 @@ class GameViewController: UIViewController, ScoredPointsDelegate {
                     totalPoints += 2
                     score.text = "\(totalPoints)"
                 } else {
-                    //healthValue = healthValue - 2
                     health.text = noNegativeScore(value: 2)
                 }
-            case 100:
+            case 91...100:
                 if zombieKilled {
                     totalPoints += 1
                     score.text = "\(totalPoints)"
                 } else {
-                    //healthValue = healthValue - 1
                     health.text = noNegativeScore(value: 1)
                 }
             default:
@@ -220,8 +280,7 @@ class GameViewController: UIViewController, ScoredPointsDelegate {
                     totalPoints += 1
                     score.text = "\(totalPoints)"
                 } else {
-                    //healthValue = healthValue - 1
-                    health.text = noNegativeScore(value: 1)
+                    health.text = noNegativeScore(value: value)
                 }
             }
         }
