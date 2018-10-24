@@ -20,15 +20,14 @@ Two major pieces were added to aid in providing a bit more complexity to the gam
 Another object was added in to the view to act as a way to lose points during game play and a moving health bar was added
 in at bottom of screen that utilizes the accelerometer to move it from left to right on the screen. 
 
-There are levels built into the the stock game play.
+![slidermovement](https://user-images.githubusercontent.com/25307091/47432535-fa8bcc00-d763-11e8-997b-c8a2241a2980.gif)
 
+There are levels built into the the stock game play. You'll notice a zombie counter of the top left of the view. Once that goes down to 0 the game speeds up and zombies now fall at a faster rate. 
 
+![image](https://user-images.githubusercontent.com/25307091/47431910-8f8dc580-d762-11e8-9d22-656c7537d773.png)
 
 ## Screenshots
-![image](https://user-images.githubusercontent.com/25307091/45259234-5dc8c700-b38d-11e8-85ed-3dc15cdb0f6f.png)
-![image](https://user-images.githubusercontent.com/25307091/45259238-776a0e80-b38d-11e8-9cc3-fce0fc912f9f.png)
-![image](https://user-images.githubusercontent.com/25307091/45259240-8224a380-b38d-11e8-9346-b98fb903b3b0.png)
-![image](https://user-images.githubusercontent.com/25307091/45259244-910b5600-b38d-11e8-8093-c82e7ba8b52d.png)
+
 
 ###### My Feedback from the challenge
 
