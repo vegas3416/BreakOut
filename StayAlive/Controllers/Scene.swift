@@ -120,7 +120,7 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
 
             if contact.bodyB.node?.physicsBody?.velocity.dx == 0 || contact.bodyB.node?.physicsBody?.velocity.dy == 0 {
                 guard let boyBody = contact.bodyB.node else { return }
-                print(boyBody.position.y)
+                
                 if (-1)*boyBody.position.y > 510 {
                     gamePointsDelegate?.gamePoints(value: 101, healthPadHit: false, zombieKilled: false)
                 } else {
@@ -128,7 +128,6 @@ class StayAlive: SKScene, SKPhysicsContactDelegate {
                 }
                 
             } else {
-                print("Zombie size: \(zombieFrame.frame.size.width)")
                 gamePointsDelegate?.gamePoints(value: Int(zombieFrame.frame.size.width), healthPadHit: false, zombieKilled: false)
             }
         }

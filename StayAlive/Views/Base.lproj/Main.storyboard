@@ -38,39 +38,36 @@
                                     <action selector="startButtonSelected:" destination="dNd-eu-p3Z" eventType="touchUpInside" id="PcF-Jz-gXI"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Score:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JRm-Qt-SZB">
-                                <rect key="frame" x="20" y="442.5" width="160" height="25.5"/>
-                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="20"/>
-                                <color key="textColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MoK-Vg-zQL">
-                                <rect key="frame" x="188" y="442.5" width="167" height="25.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="167" id="RpO-7y-D1s"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MoK-Vg-zQL">
+                                <rect key="frame" x="225.5" y="433" width="14" height="26"/>
                                 <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="20"/>
                                 <color key="textColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Score:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JRm-Qt-SZB">
+                                <rect key="frame" x="154.5" y="433" width="66" height="26"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="v5y-Sh-B5i" firstAttribute="bottom" secondItem="MoK-Vg-zQL" secondAttribute="bottom" constant="199" id="7JG-6S-vAN"/>
+                            <constraint firstItem="MoK-Vg-zQL" firstAttribute="top" secondItem="szf-bh-ClY" secondAttribute="bottom" constant="80" id="3eZ-PK-kId"/>
                             <constraint firstItem="szf-bh-ClY" firstAttribute="centerX" secondItem="j7W-ut-93r" secondAttribute="centerX" id="Emn-xB-0q8"/>
+                            <constraint firstItem="MoK-Vg-zQL" firstAttribute="leading" secondItem="JRm-Qt-SZB" secondAttribute="trailing" constant="5" id="FJt-O8-WuS"/>
                             <constraint firstItem="YFK-Th-3m6" firstAttribute="top" secondItem="v5y-Sh-B5i" secondAttribute="top" constant="25" id="Iy1-4E-zOl"/>
-                            <constraint firstItem="MoK-Vg-zQL" firstAttribute="baseline" secondItem="JRm-Qt-SZB" secondAttribute="baseline" id="KzO-Y3-18N"/>
                             <constraint firstItem="szf-bh-ClY" firstAttribute="top" secondItem="YFK-Th-3m6" secondAttribute="bottom" constant="40" id="OhF-A5-igE"/>
-                            <constraint firstItem="MoK-Vg-zQL" firstAttribute="leading" secondItem="JRm-Qt-SZB" secondAttribute="trailing" constant="8" id="VI9-lm-M9D"/>
-                            <constraint firstItem="v5y-Sh-B5i" firstAttribute="trailing" secondItem="MoK-Vg-zQL" secondAttribute="trailing" constant="20" id="ZZJ-T6-oS0"/>
+                            <constraint firstItem="JRm-Qt-SZB" firstAttribute="centerX" secondItem="j7W-ut-93r" secondAttribute="centerX" id="Rd0-v1-dZt"/>
+                            <constraint firstItem="JRm-Qt-SZB" firstAttribute="top" secondItem="szf-bh-ClY" secondAttribute="bottom" constant="80" id="SgM-8v-QId"/>
+                            <constraint firstItem="v5y-Sh-B5i" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MoK-Vg-zQL" secondAttribute="trailing" symbolic="YES" id="aTA-rL-umL"/>
                             <constraint firstItem="hAo-bf-vgf" firstAttribute="top" secondItem="v5y-Sh-B5i" secondAttribute="top" id="bKe-zf-Zym"/>
+                            <constraint firstItem="YFK-Th-3m6" firstAttribute="centerX" secondItem="j7W-ut-93r" secondAttribute="centerX" id="bf6-jQ-4in"/>
                             <constraint firstItem="v5y-Sh-B5i" firstAttribute="trailing" secondItem="hAo-bf-vgf" secondAttribute="trailing" id="dPP-ee-fW9"/>
                             <constraint firstItem="v5y-Sh-B5i" firstAttribute="bottom" secondItem="hAo-bf-vgf" secondAttribute="bottom" id="fFx-5t-5Mr"/>
                             <constraint firstItem="YFK-Th-3m6" firstAttribute="leading" secondItem="v5y-Sh-B5i" secondAttribute="leading" constant="20" id="jtq-cW-npp"/>
-                            <constraint firstItem="JRm-Qt-SZB" firstAttribute="leading" secondItem="v5y-Sh-B5i" secondAttribute="leading" constant="20" id="qI8-Py-DYz"/>
                             <constraint firstItem="hAo-bf-vgf" firstAttribute="leading" secondItem="v5y-Sh-B5i" secondAttribute="leading" id="uE2-aE-2NX"/>
                             <constraint firstItem="szf-bh-ClY" firstAttribute="leading" secondItem="v5y-Sh-B5i" secondAttribute="leading" constant="50" id="wHe-Rk-c2a"/>
-                            <constraint firstItem="v5y-Sh-B5i" firstAttribute="trailing" secondItem="YFK-Th-3m6" secondAttribute="trailing" constant="20" id="xhl-9b-JgX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="v5y-Sh-B5i"/>
                     </view>
@@ -113,6 +110,7 @@
                                     <constraint firstItem="a1S-Kl-BnW" firstAttribute="leading" secondItem="4Oc-YX-yXM" secondAttribute="trailing" constant="5" id="1jV-Gi-BVM"/>
                                     <constraint firstItem="4Oc-YX-yXM" firstAttribute="top" secondItem="LQO-8E-VG4" secondAttribute="top" constant="20" id="48R-2K-OX3"/>
                                     <constraint firstItem="a1S-Kl-BnW" firstAttribute="top" secondItem="LQO-8E-VG4" secondAttribute="top" constant="20" id="KyI-Dv-sbY"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="a1S-Kl-BnW" secondAttribute="trailing" constant="20" symbolic="YES" id="YHc-zk-1tR"/>
                                     <constraint firstItem="4Oc-YX-yXM" firstAttribute="leading" secondItem="LQO-8E-VG4" secondAttribute="leading" constant="20" id="Yzz-MN-V3u"/>
                                 </constraints>
                             </view>
@@ -142,7 +140,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="bfo-KG-tdI">
-                                <rect key="frame" x="10" y="26.5" width="123.5" height="19"/>
+                                <rect key="frame" x="10" y="26.5" width="124" height="19"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Score:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mj-3G-zGr" userLabel="Zombie">
                                         <rect key="frame" x="0.0" y="0.0" width="49.5" height="19"/>
@@ -151,7 +149,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="746" text="1000000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FPX-Me-uf5" userLabel="score">
-                                        <rect key="frame" x="51.5" y="0.0" width="72" height="19"/>
+                                        <rect key="frame" x="51.5" y="0.0" width="72.5" height="19"/>
                                         <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -208,8 +206,10 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Jut-eX-1Ys" secondAttribute="trailing" constant="40" id="ZzE-cs-0tY"/>
                             <constraint firstItem="YxF-YN-dVM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="dV6-tS-TuN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="SZ9-Rs-5ha" secondAttribute="trailing" constant="25" id="eO9-Jm-pjq"/>
+                            <constraint firstItem="TRF-ro-chD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yrI-b5-BxR" secondAttribute="trailing" constant="8" symbolic="YES" id="hEz-oX-foI"/>
+                            <constraint firstItem="SZ9-Rs-5ha" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TRF-ro-chD" secondAttribute="trailing" constant="8" symbolic="YES" id="q3m-SD-mrh"/>
                             <constraint firstItem="LQO-8E-VG4" firstAttribute="top" secondItem="TRF-ro-chD" secondAttribute="bottom" constant="5" id="qR3-r7-r7p"/>
-                            <constraint firstItem="k7e-vm-VPC" firstAttribute="leading" secondItem="bfo-KG-tdI" secondAttribute="trailing" constant="25" id="rdd-Pc-ype"/>
+                            <constraint firstItem="k7e-vm-VPC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bfo-KG-tdI" secondAttribute="trailing" id="rdd-Pc-ype"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="LQO-8E-VG4" secondAttribute="trailing" id="ugB-lm-kYY"/>
                             <constraint firstItem="Jut-eX-1Ys" firstAttribute="top" secondItem="P0Q-PA-mgl" secondAttribute="bottom" constant="5" id="vm2-Pc-pT1"/>
                         </constraints>
@@ -232,7 +232,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="background" width="350" height="591"/>
+        <image name="background" width="175" height="295"/>
         <image name="pause" width="243" height="248"/>
         <image name="stayAlive" width="473" height="232"/>
     </resources>
